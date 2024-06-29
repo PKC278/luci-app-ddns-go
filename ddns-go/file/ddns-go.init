@@ -58,6 +58,7 @@ start_instance() {
 	[[ x$enabled = x1 ]] || return 1
 	[[ -s ${CONF} ]] || init_yaml
 	[ $(awk -F. '{print $1}' /proc/uptime) -lt "120" ] && sleep $delay
+	ip -4 addr show pppoe-wan | grep -q "inet" || exit 1
 
 	config_get_bool logger $cfg logger 1
 	config_get port $cfg port '9876'
