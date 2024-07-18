@@ -2,6 +2,10 @@ name: Build
 
 on:
   workflow_dispatch:
+    inputs:
+      tag:
+        description: 'Tag for the release'
+        required: true
   push:
     tags:
       - "*"
@@ -68,3 +72,4 @@ jobs:
           allowUpdates: true
           replacesArtifacts: true
           artifacts: "bin/packages/${{ matrix.arch }}/packages_ci/*.ipk"
+          tag: ${{ github.event.inputs.tag || github.ref }}
